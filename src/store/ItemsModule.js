@@ -8,6 +8,9 @@ export default {
         setItems(state, payload) {
             state.items = payload;
         },
+        addItem(state, payload) {
+            state.items.push(payload);
+        }
     },
     getters: {
         getItems(state) {
@@ -16,8 +19,11 @@ export default {
     },
     actions: {
         fetchData(context) {
-            axios.get('https://jsonplaceholder.typicode.com/photos?_limit=10')
-                .then(response => context.commit("setPhotos", response.data))
+            axios.get('https://fakestoreapi.com/products?limit=10')
+                .then(response => context.commit("setItems", response.data))
+        },
+        addItem(context, payload) {
+            context.commit("addItem", payload);
         }
-}
+    },
 }

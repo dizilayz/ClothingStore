@@ -22,22 +22,28 @@
     </div>
 </template>
 <script>
+import {mapActions} from "vuex";
+
 export default {
     data: () => ({
         title: '',
         price: '',
         img: null,
-    }), methods: {
+    }), 
+    methods: {
+        ...mapActions(['addItem']),
         addNewItem() {
             const reader = new FileReader();
             reader.onload = () => {
                 let item = {
-                    id: Date.now(),
                     title: this.title,
                     image: reader.result,
                     price: this.price
                 }
-                this.$emit('add-item', item)
+                this.addItem(item);
+                this.title = '';
+                this.price = '';
+                this.img = null;
             }
             reader.readAsDataURL(this.img)
         }
