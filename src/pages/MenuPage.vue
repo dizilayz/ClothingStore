@@ -18,10 +18,7 @@
       AddNewItem,
     },
     methods: {
-      ...mapActions(["fetchData", "addItem"]),
-      addNewitem(item) {
-        this.addItem(item);
-      },
+      ...mapActions(["fetchData",]),
     },
     mounted() {
       this.fetchData();
