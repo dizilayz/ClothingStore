@@ -1,7 +1,7 @@
 <template>
   <v-col cols="4">
-    <v-card @click="openDialogue" class="pa-2"
-      outlined>
+    <v-card @click.prevent="openDialogue"
+      class="pa-2" outlined>
       <v-card-title
         class="text-h5 font-weight-bold">{{
           item.title }}</v-card-title>
@@ -16,16 +16,12 @@
         </div>
         <v-row
           class="d-flex justify-center align-center">
-          <v-btn icon class="mr-3">
-            <v-icon>mdi-minus</v-icon>
-          </v-btn>
           <span class="font-weight-bold">{{
             item.count }}</span>
-          <v-btn icon class="ml-3">
-            <v-icon>mdi-plus</v-icon>
-          </v-btn>
           <v-btn class="d-flex justify-right">
-            <button>Добавить в корзину</button>
+            <button class="add-to-cart-btn"
+              @click="addToCart">Добавить в
+              корзину</button>
           </v-btn>
         </v-row>
       </v-card-text>
@@ -44,10 +40,15 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['setCurrentItem', 'showDialogue']),
-    openDialogue() {
-      this.setCurrentItem(this.item);
-      this.showDialogue();
+    ...mapMutations(['setCurrentItem', 'showDialogue', 'setCartItems']),
+    openDialogue(event) {
+      if (!event.target.classList.contains('add-to-cart-btn')) {
+        this.setCurrentItem(this.item);
+        this.showDialogue();
+      }
+    },
+    addToCart() {
+      this.setCartItems(this.item);
     }
   }
 }
